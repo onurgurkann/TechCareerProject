@@ -1,4 +1,7 @@
 package com.onurgurkan.data.entity;
 
-public class AdminEntity {
+import java.io.Serializable;
+
+public class AdminEntity extends BaseEntity implements Serializable {
+    public final static long serialVersionUID=1L;
 }
