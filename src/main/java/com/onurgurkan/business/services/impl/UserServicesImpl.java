@@ -53,8 +53,8 @@ public class UserServicesImpl implements UserServices {
 
     // List
     // http://localhost:8080/users/list
-    @GetMapping("/users/list")
     @Override
+    @GetMapping("/users/list")
     public List<UserDto> getAllUsers() {
         List<UserDto> list = new ArrayList<>();
         Iterable<UserEntity> userList = userRepository.findAll();
