@@ -15,5 +15,5 @@ public class UserDto {
     private String userSurname;
     private String userMail;
     private String userPassword;
-    //private byte[] userImage;
+    private byte[] userImage;
 }
