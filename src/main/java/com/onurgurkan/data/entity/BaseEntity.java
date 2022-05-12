@@ -1,8 +1,8 @@
 package com.onurgurkan.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,8 +14,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"created_date", "update_date"}, allowGetters = true)
 abstract public class BaseEntity {
