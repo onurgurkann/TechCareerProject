@@ -1,6 +1,7 @@
 ### Special ###
 memory_persist
 log
+frontend/node_modules
 
 HELP.md
 target/
