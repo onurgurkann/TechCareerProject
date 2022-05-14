@@ -10,14 +10,14 @@ export default class HeaderComponent extends Component {
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Container>
                         <Navbar.Brand >
-                            <Link to="home">
+                            <Link to="">
                                 <img width="110px" height="auto" className="img-responsive" src={Logo} alt="logo" />
                             </Link>
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto">
-                                <Nav.Link href="home">Ana Sayfa</Nav.Link>
+                                <Nav.Link href="/">Ana Sayfa</Nav.Link>
                                 <Nav.Link href="about">Hakkında</Nav.Link>
                                 <Nav.Link href="experience">Deneyim</Nav.Link>
                                 <Nav.Link href="ability">Yetenekler</Nav.Link>

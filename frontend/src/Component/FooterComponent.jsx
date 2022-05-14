@@ -14,7 +14,7 @@ export default class FooterComponent extends Component {
                     <Navbar fixed='bottom' collapseOnSelect expand="lg" bg="dark" variant="dark">
                         <Container>
                             <Navbar.Brand>
-                                <Link to="home">
+                                <Link to="">
                                     <img width="110px" height="auto" className="img-responsive" src={Logo} alt="logo" />
                                 </Link>
                             </Navbar.Brand>
