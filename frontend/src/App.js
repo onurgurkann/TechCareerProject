@@ -1,19 +1,17 @@
-//import { Route, Routes } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-//import FooterComponent from './component/FooterComponent';
-//import HeaderComponent from './component/HeaderComponent';
-import HomeComponent from './component/HomeComponent';
+import Dashboard from './page/Dashboard';
+import Home from './page/Home';
+import ListUserComponent from './component/ListUserComponent';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/' element={<HomeComponent/>} />
+        <Route path='/' element={<Home/>} />
+        <Route path='/dashboard' element={<Dashboard/>} />
+        <Route path='/dashboard/users' element={<ListUserComponent/>}/>
       </Routes>
-      {/*<Routes>
-        <Route path='/register' element={<RegisterComponent />} />
-      </Routes>*/}
     </div>
   );
 }
