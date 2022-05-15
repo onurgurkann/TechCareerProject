@@ -1,16 +1,19 @@
 //import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import FooterComponent from './Component/FooterComponent';
-import HeaderComponent from './Component/HeaderComponent';
+//import FooterComponent from './component/FooterComponent';
+//import HeaderComponent from './component/HeaderComponent';
+import HomeComponent from './component/HomeComponent';
 
 function App() {
   return (
     <div className="App">
-      <HeaderComponent />
+      <Routes>
+        <Route path='/' element={<HomeComponent/>} />
+      </Routes>
       {/*<Routes>
         <Route path='/register' element={<RegisterComponent />} />
       </Routes>*/}
-      <FooterComponent />
     </div>
   );
 }
