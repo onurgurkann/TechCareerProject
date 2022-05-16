@@ -1,15 +1,33 @@
 import React, { Component } from 'react'
 import UserService from '../services/UserService'
+import { withRouter } from './withRouter'
 
 
-export default class ListUserComponent extends Component {
+class ListUserComponent extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             users: []
         }
+
+        this.addUser = this.addUser.bind(this)
+        this.viewUser = this.viewUser.bind(this)
+        this.updateUser = this.updateUser.bind(this)
     }
+
+    addUser() {
+        this.props.navigate('/dashboard/users/add-user')
+    }
+
+    viewUser(id){
+        this.props.navigate(`/dashboard/users/view-user/${id}`)
+    }
+
+    updateUser(id){
+        this.props.navigate(`/dashboard/users/update-user/${id}`)
+    }
+
 
     // Didmount - cdm
     componentDidMount() {
@@ -23,6 +41,11 @@ export default class ListUserComponent extends Component {
             <>
                 <h3 className='text-danger'>User List</h3>
                 <div className='container'>
+                    <div className="row">
+                        <button className="btn btn-primary btn-dm" onClick={this.addUser}>
+                            Ekleme
+                        </button>
+                    </div>
                     <div className='row'>
                         <table>
                             <thead>
@@ -47,8 +70,8 @@ export default class ListUserComponent extends Component {
                                             <td>{user.userPassword}</td>
                                             <td>{user.userImage}</td>
                                             <td>
-                                                <button className='btn btn-primary'>Göster</button>
-                                                <button className='btn btn-success'>Güncelle</button>
+                                                <button onClick={()=>this.viewUser(user.userId)} className='btn btn-primary'>Göster</button>
+                                                <button onClick={()=>this.updateUser(user.userId)} className='btn btn-success'>Güncelle</button>
                                                 <button className='btn btn-danger'>Sil</button>
                                             </td>
                                         </tr>
@@ -62,3 +85,5 @@ export default class ListUserComponent extends Component {
         )
     }
 }
+
+export default withRouter(ListUserComponent)
