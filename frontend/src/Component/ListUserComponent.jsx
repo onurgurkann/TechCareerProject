@@ -14,18 +14,29 @@ class ListUserComponent extends Component {
         this.addUser = this.addUser.bind(this)
         this.viewUser = this.viewUser.bind(this)
         this.updateUser = this.updateUser.bind(this)
+        this.deleteUser = this.deleteUser.bind(this)
     }
 
     addUser() {
-        this.props.navigate('/dashboard/users/add-user')
+        this.props.navigate('/dashboard/add-user')
     }
 
-    viewUser(id){
-        this.props.navigate(`/dashboard/users/view-user/${id}`)
+    viewUser(id) {
+        this.props.navigate(`/dashboard/view-user/${id}`)
     }
 
-    updateUser(id){
-        this.props.navigate(`/dashboard/users/update-user/${id}`)
+    updateUser(id) {
+        this.props.navigate(`/dashboard/update-user/${id}`)
+    }
+
+    deleteUser(id) {
+        UserService.deleteUser(id).then((res) => {
+            this.setState({
+                users: this.state.users.filter(
+                    (user) => user.id !== id
+                )
+            })
+        })
     }
 
 
@@ -70,9 +81,9 @@ class ListUserComponent extends Component {
                                             <td>{user.userPassword}</td>
                                             <td>{user.userImage}</td>
                                             <td>
-                                                <button onClick={()=>this.viewUser(user.userId)} className='btn btn-primary'>Göster</button>
-                                                <button onClick={()=>this.updateUser(user.userId)} className='btn btn-success'>Güncelle</button>
-                                                <button className='btn btn-danger'>Sil</button>
+                                                <button onClick={() => this.viewUser(user.userId)} className='btn btn-primary'>Göster</button>
+                                                <button onClick={() => this.updateUser(user.userId)} className='btn btn-success'>Güncelle</button>
+                                                <button onClick={() => this.deleteUser(user.userId)} className='btn btn-danger'>Sil</button>
                                             </td>
                                         </tr>
                                     ))
