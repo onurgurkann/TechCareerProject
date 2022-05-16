@@ -1,22 +1,24 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import Dashboard from './page/Dashboard';
 import Home from './page/Home';
-import ListUserComponent from './component/ListUserComponent';
 import AddUserComponent from './component/AddUserComponent';
 import ViewUserComponent from './component/ViewUserComponent';
 import UpdateUserComponent from './component/UpdateUserComponent';
+import NotFound from './component/NotFound';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/' exact element={<Home/>} />
-        <Route path='/dashboard' element={<Dashboard/>} />
-        <Route path='/dashboard/users' element={<ListUserComponent/>}/>
-        <Route path='/dashboard/users/add-user' element={<AddUserComponent/>}/>
-        <Route path='/dashboard/users/view-user/:id' element={<ViewUserComponent/>}/>
-        <Route path='/dashboard/users/update-user/:id' element={<UpdateUserComponent/>}/>
+        <Route path='*' element={<Navigate replace to="/404" />} />
+        <Route path='/404' element={<NotFound />} />
+
+        <Route path='/' exact element={<Home />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/dashboard/add-user' element={<AddUserComponent />} />
+        <Route path='/dashboard/view-user/:id' element={<ViewUserComponent />} />
+        <Route path='/dashboard/update-user/:id' element={<UpdateUserComponent />} />
       </Routes>
     </div>
   );
