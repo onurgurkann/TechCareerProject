@@ -90,8 +90,9 @@ public class UserServicesImpl implements UserServices {
         findUserEntity.setName(userEntity.getName());
         findUserEntity.setSurname(userEntity.getSurname());
         findUserEntity.setUsername(userEntity.getUsername());
-        findUserEntity.setPassword(userEntity.getPassword());
         findUserEntity.setMail(userEntity.getMail());
+        findUserEntity.setPassword(userEntity.getPassword());
+        findUserEntity.setRoles(userEntity.getRoles());
         //Save
         UserEntity saveUserEntity = userRepository.save(findUserEntity);
         //EntityToDto
