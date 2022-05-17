@@ -18,26 +18,26 @@ import java.io.Serializable;
 public class UserEntity extends BaseEntity implements Serializable {
     public final static long serialVersionUID=1L;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "user_surname")
-    private String userSurname;
+    @Column(name = "surname")
+    private String surname;
 
-    @Column(name = "user_mail")
-    private String userMail;
+    @Column(name = "username")
+    private String username;
 
-    @Column(name = "user_password")
-    private String userPassword;
+    @Column(name = "mail")
+    private String mail;
 
-    @Column(name = "user_image")
-    private byte[] userImage;
+    @Column(name = "password")
+    private String password;
 
-    public UserEntity(String userName, String userSurname, String userMail, String userPassword, byte[] userImage) {
-        this.userName = userName;
-        this.userSurname = userSurname;
-        this.userMail = userMail;
-        this.userPassword = userPassword;
-        this.userImage = userImage;
+    public UserEntity(String name, String surname, String username, String mail, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.mail = mail;
+        this.password = password;
     }
 }

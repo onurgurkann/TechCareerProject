@@ -87,11 +87,11 @@ public class UserServicesImpl implements UserServices {
         //Find
         UserEntity findUserEntity = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found. User ID : "+id));
         //Set
-        findUserEntity.setUserName(userEntity.getUserName());
-        findUserEntity.setUserSurname(userEntity.getUserSurname());
-        findUserEntity.setUserPassword(userEntity.getUserPassword());
-        findUserEntity.setUserMail(userEntity.getUserMail());
-        findUserEntity.setUserImage(userEntity.getUserImage());
+        findUserEntity.setName(userEntity.getName());
+        findUserEntity.setSurname(userEntity.getSurname());
+        findUserEntity.setUsername(userEntity.getUsername());
+        findUserEntity.setPassword(userEntity.getPassword());
+        findUserEntity.setMail(userEntity.getMail());
         //Save
         UserEntity saveUserEntity = userRepository.save(findUserEntity);
         //EntityToDto
