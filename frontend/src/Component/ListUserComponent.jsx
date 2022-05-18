@@ -64,26 +64,24 @@ class ListUserComponent extends Component {
                                     <th>ID</th>
                                     <th>Ad</th>
                                     <th>Soyad</th>
+                                    <th>Kullanıcı Adı</th>
                                     <th>E-Mail</th>
-                                    <th>Parola</th>
-                                    <th>Resim</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     this.state.users.map((user) => (
-                                        <tr key={user.userId}>
-                                            <td>{user.userId}</td>
-                                            <td>{user.userName}</td>
-                                            <td>{user.userSurname}</td>
-                                            <td>{user.userMail}</td>
-                                            <td>{user.userPassword}</td>
-                                            <td>{user.userImage}</td>
+                                        <tr key={user.id}>
+                                            <td>{user.id}</td>
+                                            <td>{user.name}</td>
+                                            <td>{user.surname}</td>
+                                            <td>{user.username}</td>
+                                            <td>{user.mail}</td>
                                             <td>
-                                                <button onClick={() => this.viewUser(user.userId)} className='btn btn-primary'>Göster</button>
-                                                <button onClick={() => this.updateUser(user.userId)} className='btn btn-success'>Güncelle</button>
-                                                <button onClick={() => this.deleteUser(user.userId)} className='btn btn-danger'>Sil</button>
+                                                <button onClick={() => this.viewUser(user.id)} className='btn btn-primary'>Göster</button>
+                                                <button onClick={() => this.updateUser(user.id)} className='btn btn-success'>Güncelle</button>
+                                                <button onClick={() => this.deleteUser(user.id)} className='btn btn-danger'>Sil</button>
                                             </td>
                                         </tr>
                                     ))

@@ -29,7 +29,7 @@ export default class ViewUserComponent extends Component {
         <Card centered className='text-center'>
           <Image src={Logo} wrapped ui={false} />
           <Card.Content>
-            <Card.Header>{this.state.user.userName + " " + this.state.user.userSurname}</Card.Header>
+            <Card.Header>{this.state.user.name + " " + this.state.user.surname}</Card.Header>
             <Card.Meta>
               <span></span>
             </Card.Meta>
@@ -39,7 +39,7 @@ export default class ViewUserComponent extends Component {
           </Card.Content>
           <Card.Content extra>
               <Icon name='mail outline'/>
-              {this.state.user.userMail}
+              {this.state.user.mail}
           </Card.Content>
         </Card>
         <DashboardFooter />
