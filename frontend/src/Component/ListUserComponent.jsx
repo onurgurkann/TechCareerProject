@@ -50,14 +50,15 @@ class ListUserComponent extends Component {
     render() {
         return (
             <>
-                <h3 className='text-danger'>User List</h3>
                 <div className='container'>
-                    <div className="row">
+                    <h3 className='text-danger'>Kullanıcı Listesi</h3>
+                    {/* <div className="row">
                         <button className="btn btn-primary btn-dm" onClick={this.addUser}>
                             Ekleme
                         </button>
-                    </div>
-                    <div className='row'>
+                    </div> */}
+                    <br/>
+                    <div className='row text-center'>
                         <table>
                             <thead>
                                 <tr>

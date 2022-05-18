@@ -12,8 +12,8 @@ export default class Dashboard extends Component {
         <br/><br/>
         <div className='container'>
           <Grid divided='vertically'>
-            <Grid.Row Column={2}>
-              <Grid.Column width={4}>
+            <Grid.Row>
+              <Grid.Column width={4} className="text-center">
                 <Menu pointing vertical>
                   <Menu.Item name="admin">Yönetici</Menu.Item>
                   <Menu.Item name="user">Kullanıcı</Menu.Item>
