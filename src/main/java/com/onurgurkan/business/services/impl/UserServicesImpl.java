@@ -2,7 +2,10 @@ package com.onurgurkan.business.services.impl;
 
 import com.onurgurkan.business.dto.UserDto;
 import com.onurgurkan.business.services.UserServices;
+import com.onurgurkan.data.entity.ERole;
+import com.onurgurkan.data.entity.RoleEntity;
 import com.onurgurkan.data.entity.UserEntity;
+import com.onurgurkan.data.repository.RoleRepository;
 import com.onurgurkan.data.repository.UserRepository;
 import com.onurgurkan.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -12,16 +15,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServicesImpl implements UserServices {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -97,7 +100,32 @@ public class UserServicesImpl implements UserServices {
         findUserEntity.setUsername(userEntity.getUsername());
         findUserEntity.setMail(userEntity.getMail());
         findUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        findUserEntity.setRoles(userEntity.getRoles());
+
+        Set<String> role = userDto.getRoles();
+        Set<RoleEntity> roles = new HashSet<>();
+
+        if (role == null) {
+            RoleEntity userRole = roleRepository.findRoleByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            role.forEach(r -> {
+                switch (r) {
+                    case "admin":
+                        RoleEntity adminRole = roleRepository.findRoleByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+                        break;
+
+                    default:
+                        RoleEntity userRole = roleRepository.findRoleByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+        findUserEntity.setRoles(roles);
+
         //Save
         UserEntity saveUserEntity = userRepository.save(findUserEntity);
         //EntityToDto
