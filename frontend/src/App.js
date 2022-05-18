@@ -6,6 +6,8 @@ import AddUserComponent from './component/AddUserComponent';
 import ViewUserComponent from './component/ViewUserComponent';
 import UpdateUserComponent from './component/UpdateUserComponent';
 import NotFound from './component/NotFound';
+import Login from './page/Login';
+import Register from './page/Register';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path='/404' element={<NotFound />} />
 
         <Route path='/' exact element={<Home />} />
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/dashboard/add-user' element={<AddUserComponent />} />
         <Route path='/dashboard/view-user/:id' element={<ViewUserComponent />} />
