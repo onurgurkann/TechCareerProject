@@ -1,5 +1,6 @@
-package com.onurgurkan.controller;
+package com.onurgurkan.business.services.impl;
 
+import com.onurgurkan.business.services.AuthServices;
 import com.onurgurkan.data.entity.ERole;
 import com.onurgurkan.data.entity.RoleEntity;
 import com.onurgurkan.data.entity.UserEntity;
@@ -20,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,10 +30,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
-@RestController
-@RequestMapping("/api/auth")
-public class AuthController {
+@Service
+public class AuthServicesImpl implements AuthServices {
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -48,8 +48,9 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Override
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -72,6 +73,7 @@ public class AuthController {
                         roles));
     }
 
+    @Override
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -118,8 +120,9 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+    @Override
     @PostMapping("/signout")
-    public ResponseEntity<?> logoutUser(){
+    public ResponseEntity<?> logoutUser() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(new MessageResponse("You've been signed out"));
     }
