@@ -8,6 +8,7 @@ import com.onurgurkan.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,9 @@ public class UserServicesImpl implements UserServices {
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     // ModelMapper : Entity to Dto - Dto to Entity
 
@@ -47,6 +51,7 @@ public class UserServicesImpl implements UserServices {
     @PostMapping("users/save")
     public UserDto createUser(@RequestBody UserDto userDto) {
         UserEntity entity = DtoToEntity(userDto);
+        entity.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(entity);
         return userDto;
     }
@@ -91,7 +96,7 @@ public class UserServicesImpl implements UserServices {
         findUserEntity.setSurname(userEntity.getSurname());
         findUserEntity.setUsername(userEntity.getUsername());
         findUserEntity.setMail(userEntity.getMail());
-        findUserEntity.setPassword(userEntity.getPassword());
+        findUserEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         findUserEntity.setRoles(userEntity.getRoles());
         //Save
         UserEntity saveUserEntity = userRepository.save(findUserEntity);
