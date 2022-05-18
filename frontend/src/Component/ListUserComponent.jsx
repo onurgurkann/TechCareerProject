@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import UserService from '../services/UserService'
 import { withRouter } from './withRouter'
+import {Table} from 'reactstrap'
 
 
 class ListUserComponent extends Component {
@@ -59,7 +60,7 @@ class ListUserComponent extends Component {
                     </div> */}
                     <br/>
                     <div className='row text-center'>
-                        <table>
+                        <Table hover>
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -88,7 +89,7 @@ class ListUserComponent extends Component {
                                     ))
                                 }
                             </tbody>
-                        </table>
+                        </Table>
                     </div>
                 </div>
             </>
