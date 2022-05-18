@@ -34,5 +34,5 @@ public class UserDto {
     @NotBlank
     private String password;
 
-    private Set<RoleEntity> roles = new HashSet<>();
+    private Set<String> roles;
 }
