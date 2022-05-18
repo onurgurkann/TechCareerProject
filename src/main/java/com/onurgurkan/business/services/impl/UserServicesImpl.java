@@ -55,6 +55,32 @@ public class UserServicesImpl implements UserServices {
     public UserDto createUser(@RequestBody UserDto userDto) {
         UserEntity entity = DtoToEntity(userDto);
         entity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
+        Set<String> role = userDto.getRoles();
+        Set<RoleEntity> roles = new HashSet<>();
+
+        if (role == null) {
+            RoleEntity userRole = roleRepository.findRoleByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            role.forEach(r -> {
+                switch (r) {
+                    case "admin":
+                        RoleEntity adminRole = roleRepository.findRoleByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+                        break;
+
+                    default:
+                        RoleEntity userRole = roleRepository.findRoleByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+        entity.setRoles(roles);
+
         userRepository.save(entity);
         return userDto;
     }
