@@ -16,6 +16,7 @@ class AddUserComponent extends Component {
       roles: ['']
     }
 
+    this.cancel = this.cancel.bind(this);
     this.change = this.change.bind(this);
     this.changeName = this.changeName.bind(this);
     this.changeSurname = this.changeSurname.bind(this);
@@ -53,6 +54,10 @@ class AddUserComponent extends Component {
     this.props.navigate('/dashboard')
   }
 
+  cancel() {
+    this.props.navigate('/dashboard')
+  }
+
   changeName = (event) => {
     this.setState({ name: event.target.value })
   }
@@ -77,26 +82,14 @@ class AddUserComponent extends Component {
     return document.querySelector('#role').value;
   }
 
-  getTitle() {
-    const { id } = this.props.params;
-    if (id === '_add') {
-      return <h3 className='text-center'>Ekleme</h3>
-    } else {
-      return <h3 className='text-center'>Güncelleme</h3>
-    }
-  }
-
   render() {
     return (
       <>
         <br /><br /><br />
         <div className='container'>
           <div className='row'>
-            <div className='card col-md-6 offset-md-3'>
-              <br />
-              {
-                this.getTitle()
-              }
+            <div className='card col-md-6 offset-md-3'><br />
+              <h3 className='text-center'>Ekleme</h3>
               <div className='card-body'>
                 <Form>
                   <FormGroup>
@@ -165,7 +158,7 @@ class AddUserComponent extends Component {
                     </Input>
                   </FormGroup>
                   <Button className='btn btn-success' onClick={this.saveUser}>Kaydet</Button>
-                  {/* <Button style={{ marginLeft: "2%" }} className='btn btn-danger' onClick={this.cancel}>İptal</Button> */}
+                  <Button style={{ marginLeft: "2%" }} className='btn btn-danger' onClick={this.cancel}>İptal</Button>
                 </Form>
               </div>
             </div>
