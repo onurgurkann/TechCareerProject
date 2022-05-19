@@ -37,7 +37,7 @@ class UpdateUserComponent extends Component {
         surname: user.surname,
         username: user.username,
         mail: user.mail,
-        password: user.password,
+        password: '',
         roles: user.roles
       });
     });
@@ -88,7 +88,7 @@ class UpdateUserComponent extends Component {
     return (
       <>
         <DashboardHeader />
-        <br /><br /><br />
+        <br />
         <div className='container'>
           <div className='row'>
             <div className='card col-md-6 offset-md-3'><br />
@@ -160,7 +160,7 @@ class UpdateUserComponent extends Component {
                       <option value="admin" onChange={this.change}>Yönetici</option>
                     </Input>
                   </FormGroup>
-                  <Button className='btn btn-success' onClick={this.updateUser}>Kaydet</Button>
+                  <Button className='btn btn-success' onClick={this.updateUser}>Güncelle</Button>
                   <Button style={{ marginLeft: "2%" }} className='btn btn-danger' onClick={this.cancel}>İptal</Button>
                 </Form>
               </div>
