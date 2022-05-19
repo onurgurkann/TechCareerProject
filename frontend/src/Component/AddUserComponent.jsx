@@ -50,8 +50,10 @@ class AddUserComponent extends Component {
     let user = {name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: this.state.roles};
     console.log('user = >' + JSON.stringify(user));
 
-    UserService.createUser(user);
-    this.props.navigate('/dashboard')
+    UserService.createUser(user).then(res => {
+       this.props.navigate('/dashboard')
+    })
+   
   }
 
   cancel() {
