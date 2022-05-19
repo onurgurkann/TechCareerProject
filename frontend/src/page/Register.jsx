@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import UserService from '../services/UserService';
+import AuthService from '../services/AuthService';
 
 class Register extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class Register extends Component {
     let user = { name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: this.state.roles };
     console.log('user = >' + JSON.stringify(user));
 
-    UserService.createUser(user).then(res => {
+    AuthService.registerUser(user).then(res => {
       this.props.navigate('/login')
     })
 
