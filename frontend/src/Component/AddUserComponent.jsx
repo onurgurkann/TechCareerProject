@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import UserService from '../services/UserService';
+import DashboardFooter from './DashboardFooter';
+import DashboardHeader from './DashboardHeader';
 
 class AddUserComponent extends Component {
   constructor(props) {
@@ -47,13 +49,13 @@ class AddUserComponent extends Component {
 
   saveUser = (e) => {
     e.preventDefault();
-    let user = {name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: this.state.roles};
+    let user = { name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: this.state.roles };
     console.log('user = >' + JSON.stringify(user));
 
     UserService.createUser(user).then(res => {
-       this.props.navigate('/dashboard')
+      this.props.navigate('/dashboard')
     })
-   
+
   }
 
   cancel() {
@@ -87,11 +89,12 @@ class AddUserComponent extends Component {
   render() {
     return (
       <>
-        <br /><br /><br />
+        <DashboardHeader />
+        <br />
         <div className='container'>
           <div className='row'>
             <div className='card col-md-6 offset-md-3'><br />
-              <h3 className='text-center'>Ekleme</h3>
+              <div className='text-center bg-light'><h3>Ekleme</h3></div>
               <div className='card-body'>
                 <Form>
                   <FormGroup>
@@ -166,6 +169,7 @@ class AddUserComponent extends Component {
             </div>
           </div>
         </div>
+        <DashboardFooter />
       </>
     )
   }
@@ -175,8 +179,8 @@ export default (props) => (
   <AddUserComponent
     {...props}
     params={useParams()}
-    
-    navigate = {useNavigate()}
+
+    navigate={useNavigate()}
     {...props}
   />
 );

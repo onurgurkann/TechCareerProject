@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import UserService from '../services/UserService';
+import DashboardFooter from './DashboardFooter';
+import DashboardHeader from './DashboardHeader';
 
 class UpdateUserComponent extends Component {
   constructor(props) {
@@ -30,28 +32,28 @@ class UpdateUserComponent extends Component {
     const { id } = this.props.params;
     UserService.getUserById(id).then((res) => {
       let user = res.data;
-        this.setState({
-          name: user.name,
-          surname: user.surname,
-          username: user.username,
-          mail: user.mail,
-          password: user.password,
-          roles: user.roles
-        });
+      this.setState({
+        name: user.name,
+        surname: user.surname,
+        username: user.username,
+        mail: user.mail,
+        password: user.password,
+        roles: user.roles
+      });
     });
   }
 
   updateUser = (e) => {
     e.preventDefault();
-    const {id} = this.props.params;
-    let user = {name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: this.state.roles};
+    const { id } = this.props.params;
+    let user = { name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: this.state.roles };
     console.log('user = >' + JSON.stringify(user));
     console.log('id => ' + JSON.stringify(id))
 
     UserService.updateUser(id, user).then(res => {
       this.props.navigate('/dashboard');
     })
-    
+
   }
 
   cancel() {
@@ -85,11 +87,12 @@ class UpdateUserComponent extends Component {
   render() {
     return (
       <>
+        <DashboardHeader />
         <br /><br /><br />
         <div className='container'>
           <div className='row'>
             <div className='card col-md-6 offset-md-3'><br />
-              <h3 className='text-center'>Güncelleme</h3>
+            <div className='text-center bg-light'><h3>Güncelleme</h3></div>
               <div className='card-body'>
                 <Form>
                   <FormGroup>
@@ -164,6 +167,7 @@ class UpdateUserComponent extends Component {
             </div>
           </div>
         </div>
+        <DashboardFooter />
       </>
     )
   }
