@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import UserService from '../services/UserService';
-import { withRouter } from './withRouter'
 
 class AddUserComponent extends Component {
   constructor(props) {
