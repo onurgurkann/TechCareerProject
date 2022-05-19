@@ -20,7 +20,7 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/dashboard/add-user' element={<AddUserComponent />} />
+        <Route path='/dashboard/add-user/_add' element={<AddUserComponent />} />
         <Route path='/dashboard/view-user/:id' element={<ViewUserComponent />} />
         <Route path='/dashboard/update-user/:id' element={<UpdateUserComponent />} />
       </Routes>
