@@ -84,7 +84,7 @@ class AddUserComponent extends Component {
   }
 
   change = (event) => {
-    this.setState({roles: event.target.value});
+    this.setState({ roles: event.target.value });
   }
 
   render() {
@@ -156,11 +156,12 @@ class AddUserComponent extends Component {
                   <FormGroup>
                     <Label>Rol</Label>
                     <Input
-                    id="role"
-                    name="role"
-                    type="select" onChange={this.change} value={this.state.roles}>
-                        <option value="user">Kullanıcı</option>
-                        <option value="admin">Yönetici</option>
+                      id="role"
+                      name="role"
+                      type="select" onChange={this.change} value={this.state.roles}>
+                      <option>Seç...</option>
+                      <option value="user">Kullanıcı</option>
+                      <option value="admin">Yönetici</option>
                     </Input>
                   </FormGroup>
                   <Button className='btn btn-success' onClick={this.saveUser}>Kaydet</Button>

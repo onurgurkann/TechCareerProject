@@ -82,7 +82,7 @@ class UpdateUserComponent extends Component {
   }
 
   change = (event) => {
-    this.setState({roles: event.target.value});
+    this.setState({ roles: event.target.value });
   }
 
   render() {
@@ -93,7 +93,7 @@ class UpdateUserComponent extends Component {
         <div className='container'>
           <div className='row'>
             <div className='card col-md-6 offset-md-3'><br />
-            <div className='text-center bg-light'><h3>Güncelleme</h3></div>
+              <div className='text-center bg-light'><h3>Güncelleme</h3></div>
               <div className='card-body'>
                 <Form>
                   <FormGroup>
@@ -154,11 +154,12 @@ class UpdateUserComponent extends Component {
                   <FormGroup>
                     <Label>Rol</Label>
                     <Input
-                    id="role"
-                    name="role"
-                    type="select" onChange={this.change} value={this.state.roles}>
-                        <option value="user">Kullanıcı</option>
-                        <option value="admin">Yönetici</option>
+                      id="role"
+                      name="role"
+                      type="select" onChange={this.change} value={this.state.roles}>
+                      <option>Seç...</option>
+                      <option value="user">Kullanıcı</option>
+                      <option value="admin">Yönetici</option>
                     </Input>
                   </FormGroup>
                   <Button className='btn btn-success' onClick={this.updateUser}>Güncelle</Button>
