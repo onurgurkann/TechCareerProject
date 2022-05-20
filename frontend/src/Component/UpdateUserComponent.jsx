@@ -46,7 +46,8 @@ class UpdateUserComponent extends Component {
   updateUser = (e) => {
     e.preventDefault();
     const { id } = this.props.params;
-    let user = { name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: this.state.roles };
+    var role = [this.state.roles];
+    let user = { name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: role };
     console.log('user = >' + JSON.stringify(user));
     console.log('id => ' + JSON.stringify(id))
 
@@ -80,8 +81,8 @@ class UpdateUserComponent extends Component {
     this.setState({ password: event.target.value })
   }
 
-  change() {
-    return document.querySelector('#role').value;
+  change = (event) => {
+    this.setState({roles: event.target.value});
   }
 
   render() {
@@ -153,11 +154,11 @@ class UpdateUserComponent extends Component {
                   <FormGroup>
                     <Label>Rol</Label>
                     <Input
-                      id="role"
-                      name="role"
-                      type="select">
-                      <option value="user" onChange={this.change}>Kullanıcı</option>
-                      <option value="admin" onChange={this.change}>Yönetici</option>
+                    id="role"
+                    name="role"
+                    type="select" onChange={this.change} value={this.state.roles}>
+                        <option value="user">Kullanıcı</option>
+                        <option value="admin">Yönetici</option>
                     </Input>
                   </FormGroup>
                   <Button className='btn btn-success' onClick={this.updateUser}>Güncelle</Button>
