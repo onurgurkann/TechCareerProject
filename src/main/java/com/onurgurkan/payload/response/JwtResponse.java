@@ -2,7 +2,10 @@ package com.onurgurkan.payload.response;
 
 import java.util.List;
 
-public class UserInfoResponse {
+public class JwtResponse {
+    private String token;
+    private String type = "Bearer";
+
     private Long id;
     private String name;
     private String surname;
@@ -10,13 +13,30 @@ public class UserInfoResponse {
     private String email;
     private List<String> roles;
 
-    public UserInfoResponse(Long id, String name, String surname, String username, String email, List<String> roles) {
+    public JwtResponse(String accessToken, Long id, String name, String surname, String username, String email, List<String> roles) {
+        this.token = accessToken;
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.email = email;
         this.roles = roles;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Long getId() {

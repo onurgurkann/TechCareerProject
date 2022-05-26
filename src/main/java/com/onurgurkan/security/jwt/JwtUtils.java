@@ -5,12 +5,8 @@ import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseCookie;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Component
@@ -23,26 +19,15 @@ public class JwtUtils {
     @Value("${jwt.expire.time}")
     private int jwtExpireTime;
 
-    @Value("${jwt.cookie.name}")
-    private String jwtCookieName;
+    public String generateJwtToken(Authentication authentication){
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
-    public String getJwtFromCookies(HttpServletRequest request){
-        Cookie cookie = WebUtils.getCookie(request, jwtCookieName);
-        if(cookie != null)
-            return cookie.getValue();
-        else
-            return null;
-    }
-
-    public ResponseCookie generateJwtCookie(UserDetailsImpl userDetails){
-        String jwt = generateTokenFromUsername(userDetails.getUsername());
-        ResponseCookie cookie = ResponseCookie.from(jwtCookieName, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
-        return cookie;
-    }
-
-    public ResponseCookie getCleanJwtCookie(){
-        ResponseCookie cookie = ResponseCookie.from(jwtCookieName, null).path("/api").build();
-        return cookie;
+        return Jwts.builder()
+                .setSubject(userPrincipal.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + jwtExpireTime))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
     }
 
     public String getUserNameFromJwtToken(String token){
@@ -65,14 +50,5 @@ public class JwtUtils {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
         return false;
-    }
-
-    public String generateTokenFromUsername(String username){
-        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpireTime))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .compact();
     }
 }

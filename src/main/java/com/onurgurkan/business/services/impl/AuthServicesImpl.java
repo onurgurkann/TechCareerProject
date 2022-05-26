@@ -9,12 +9,10 @@ import com.onurgurkan.data.repository.UserRepository;
 import com.onurgurkan.payload.request.LoginRequest;
 import com.onurgurkan.payload.request.SignupRequest;
 import com.onurgurkan.payload.response.MessageResponse;
-import com.onurgurkan.payload.response.UserInfoResponse;
+import com.onurgurkan.payload.response.JwtResponse;
 import com.onurgurkan.security.jwt.JwtUtils;
 import com.onurgurkan.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -54,34 +52,32 @@ public class AuthServicesImpl implements AuthServices {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
-
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoResponse(
-                        userDetails.getId(),
-                        userDetails.getName(),
-                        userDetails.getSurname(),
-                        userDetails.getUsername(),
-                        userDetails.getMail(),
-                        roles));
+        return ResponseEntity.ok(new JwtResponse(
+                jwt,
+                userDetails.getId(),
+                userDetails.getName(),
+                userDetails.getSurname(),
+                userDetails.getUsername(),
+                userDetails.getMail(),
+                roles));
     }
 
     @Override
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Hata: Kullanıcı adı zaten alınmış!"));
         }
 
         if (userRepository.existsByMail(signUpRequest.getMail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Hata: E-posta adresi zaten kullanılıyor!"));
         }
 
         UserEntity userEntity = new UserEntity(signUpRequest.getName(),
@@ -95,20 +91,20 @@ public class AuthServicesImpl implements AuthServices {
 
         if (strRoles == null) {
             RoleEntity userRole = roleRepository.findRoleByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException("Hata: Rol bulunamadı."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
                         RoleEntity adminRole = roleRepository.findRoleByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RuntimeException("Hata: Rol bulunamadı."));
                         roles.add(adminRole);
                         break;
 
                     default:
                         RoleEntity userRole = roleRepository.findRoleByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RuntimeException("Hata: Rol bulunamadı."));
                         roles.add(userRole);
                 }
             });
@@ -117,13 +113,7 @@ public class AuthServicesImpl implements AuthServices {
         userEntity.setRoles(roles);
         userRepository.save(userEntity);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Kullanıcı başarı ile kaydedildi."));
     }
 
-    @Override
-    @PostMapping("/signout")
-    public ResponseEntity<?> logoutUser() {
-        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(new MessageResponse("You've been signed out"));
-    }
 }

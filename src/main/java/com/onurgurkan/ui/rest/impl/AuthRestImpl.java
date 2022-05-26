@@ -29,10 +29,4 @@ public class AuthRestImpl implements AuthRest {
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         return authServices.registerUser(signUpRequest);
     }
-
-    @Override
-    @PostMapping("/signout")
-    public ResponseEntity<?> logoutUser() {
-        return authServices.logoutUser();
-    }
 }

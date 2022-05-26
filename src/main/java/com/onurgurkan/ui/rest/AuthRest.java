@@ -8,6 +8,4 @@ public interface AuthRest {
     ResponseEntity<?> authenticateUser(LoginRequest loginRequest);
 
     ResponseEntity<?> registerUser(SignupRequest signUpRequest);
-
-    ResponseEntity<?> logoutUser();
 }

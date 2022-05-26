@@ -9,6 +9,4 @@ public interface AuthServices {
     public ResponseEntity<?> authenticateUser(LoginRequest loginRequest);
 
     public ResponseEntity<?> registerUser(SignupRequest signUpRequest);
-
-    public ResponseEntity<?> logoutUser();
 }
