@@ -1,162 +1,273 @@
-import React, { Component } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
-import UserService from '../services/UserService';
-import AuthService from '../services/AuthService';
+import React, { Component } from "react";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import { isEmail } from "validator";
+import "./Register.css";
 
-class Register extends Component {
+import AuthService from "../services/AuthService";
+import HeaderComponent from "../component/HeaderComponent";
+import FooterComponent from "../component/FooterComponent";
+
+const required = value => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Bu alan boş geçilemez!
+      </div>
+    );
+  }
+};
+
+const email = value => {
+  if (!isEmail(value)) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Lütfen geçerli bir e-posta adresi girin!
+      </div>
+    );
+  }
+};
+
+const vname = value => {
+  if (value.length < 3 || value.length > 20) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Ad 3 ile 20 karakter arasında olmalıdır!
+      </div>
+    );
+  }
+};
+
+const vsurname = value => {
+  if (value.length < 3 || value.length > 20) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Soyad 3 ile 20 karakter arasında olmalıdır!
+      </div>
+    );
+  }
+};
+
+const vusername = value => {
+  if (value.length < 3 || value.length > 20) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Kullanıcı adı 3 ile 20 karakter arasında olmalıdır!
+      </div>
+    );
+  }
+};
+
+const vpassword = value => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Parola 6 ile 40 karakter arasında olmalıdır!
+      </div>
+    );
+  }
+};
+
+export default class Register extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.handleRegister = this.handleRegister.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeSurname = this.onChangeSurname.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
 
     this.state = {
-      name: '',
-      surname: '',
-      username: '',
-      mail: '',
-      password: ''
-    }
-
-    this.login = this.login.bind(this);
-    this.changeName = this.changeName.bind(this);
-    this.changeSurname = this.changeSurname.bind(this);
-    this.changeUsername = this.changeUsername.bind(this);
-    this.changeMail = this.changeMail.bind(this);
-    this.changePassword = this.changePassword.bind(this);
-    this.saveUser = this.saveUser.bind(this);
+      name: "",
+      surname: "",
+      username: "",
+      mail: "",
+      password: "",
+      successful: false,
+      message: ""
+    };
   }
-
-  componentDidMount() {
-    const { id } = this.props.params;
-    UserService.getUserById(id).then((res) => {
-      let user = res.data;
-      this.state({
-        name: user.name,
-        surname: user.surname,
-        username: user.username,
-        mail: user.mail,
-        password: user.password
-      });
+  onChangeName(e) {
+    this.setState({
+      name: e.target.value
     });
   }
 
-  saveUser = (e) => {
+  onChangeSurname(e) {
+    this.setState({
+      surname: e.target.value
+    });
+  }
+
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value
+    });
+  }
+
+  onChangeEmail(e) {
+    this.setState({
+      mail: e.target.value
+    });
+  }
+
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value
+    });
+  }
+
+  handleRegister(e) {
     e.preventDefault();
-    let user = { name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: this.state.roles };
-    console.log('user = >' + JSON.stringify(user));
 
-    AuthService.registerUser(user).then(res => {
-      this.props.navigate('/login')
-    })
+    console.log(this.state)
 
-  }
+    this.setState({
+      message: "",
+      successful: false
+    });
 
-  login() {
-    this.props.navigate('/login')
-  }
+    this.form.validateAll();
 
-  changeName = (event) => {
-    this.setState({ name: event.target.value })
-  }
+    if (this.checkBtn.context._errors.length === 0) {
 
-  changeSurname = (event) => {
-    this.setState({ surname: event.target.value })
-  }
+      let user = { name: this.state.name, surname: this.state.surname, username: this.state.username, mail: this.state.mail, password: this.state.password, roles: this.state.roles };
+      AuthService.registerUser(user).then(
+        response => {
+          this.setState({
+            message: response.data.message,
+            successful: true
+          });
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
 
-  changeUsername = (event) => {
-    this.setState({ username: event.target.value })
-  }
-
-  changeMail = (event) => {
-    this.setState({ mail: event.target.value })
-  }
-
-  changePassword = (event) => {
-    this.setState({ password: event.target.value })
+          this.setState({
+            successful: false,
+            message: resMessage
+          });
+        }
+      );
+    }
   }
 
   render() {
     return (
-      <>
-        <br /><br /><br />
-        <div className='container'>
-          <div className='row'>
-            <div className='card col-md-6 offset-md-3'><br />
-              <div className='text-center bg-light'><h3>Kayıt Ol</h3></div>
-              <div className='card-body'>
-                <Form>
-                  <FormGroup>
-                    <Label>Ad</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      placeholder="Ad"
-                      type="text"
-                      value={this.state.name}
-                      onChange={this.changeName} />
-                  </FormGroup>
+      <div className="col-md-12">
+        <HeaderComponent />
+        <div className="card card-container">
+          <img
+            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            alt="profile-img"
+            className="profile-img-card"
+          />
 
-                  <FormGroup>
-                    <Label>Soyad</Label>
-                    <Input
-                      id="surname"
-                      name="surname"
-                      placeholder="Soyad"
-                      type="text"
-                      value={this.state.surname}
-                      onChange={this.changeSurname} />
-                  </FormGroup>
+          <Form
+            onSubmit={this.handleRegister}
+            ref={c => {
+              this.form = c;
+            }}
+          >
+            {!this.state.successful && (
+              <div>
+                <div className="form-group">
+                  <label htmlFor="name">Ad</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="name"
+                    value={this.state.name}
+                    onChange={this.onChangeName}
+                    validations={[required, vname]}
+                  />
+                </div>
 
-                  <FormGroup>
-                    <Label>Kullanıcı Adı</Label>
-                    <Input
-                      id="username"
-                      name="username"
-                      placeholder="Kullanıcı Adı"
-                      type="text"
-                      value={this.state.username}
-                      onChange={this.changeUsername} />
-                  </FormGroup>
+                <div className="form-group">
+                  <label htmlFor="surname">Soyad</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="surname"
+                    value={this.state.surname}
+                    onChange={this.onChangeSurname}
+                    validations={[required, vsurname]}
+                  />
+                </div>
 
-                  <FormGroup>
-                    <Label>E-Mail</Label>
-                    <Input
-                      id="mail"
-                      name="mail"
-                      placeholder="E-Mail Adresi"
-                      type="email"
-                      value={this.state.mail}
-                      onChange={this.changeMail} />
-                  </FormGroup>
 
-                  <FormGroup>
-                    <Label>Parola</Label>
-                    <Input
-                      id="password"
-                      name="password"
-                      placeholder="Parola"
-                      type="password"
-                      value={this.state.password}
-                      onChange={this.changePassword} />
-                  </FormGroup>
+                <div className="form-group">
+                  <label htmlFor="username">Kullanıcı Adı</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.onChangeUsername}
+                    validations={[required, vusername]}
+                  />
+                </div>
 
-                  <Button className='btn btn-success' onClick={this.saveUser}>Kayıt Ol</Button>
-                  <Button style={{ marginLeft: "2%" }} className='btn btn-danger' onClick={this.login}>Giriş Yap</Button>
-                </Form>
+                <div className="form-group">
+                  <label htmlFor="mail">E-Mail</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="mail"
+                    value={this.state.mail}
+                    onChange={this.onChangeEmail}
+                    validations={[required, email]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="password">Parola</label>
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.onChangePassword}
+                    validations={[required, vpassword]}
+                  />
+                </div>
+
+                <div className="form-group"><br />
+                  <button className="btn btn-primary btn-block">Kayıt Ol</button>
+                </div><br /><br />
               </div>
-            </div>
-          </div>
+            )}
+
+            {this.state.message && (
+              <div className="form-group">
+                <div
+                  className={
+                    this.state.successful
+                      ? "alert alert-success"
+                      : "alert alert-danger"
+                  }
+                  role="alert"
+                >
+                  {this.state.message}
+                </div>
+              </div>
+            )}
+            <CheckButton
+              style={{ display: "none" }}
+              ref={c => {
+                this.checkBtn = c;
+              }}
+            />
+          </Form>
         </div>
-      </>
-    )
+        <FooterComponent />
+      </div>
+    );
   }
 }
-
-export default (props) => (
-  <Register
-    {...props}
-    params={useParams()}
-
-    navigate={useNavigate()}
-    {...props}
-  />
-);
