@@ -6,8 +6,6 @@ import { isEmail } from "validator";
 import "./Register.css";
 
 import AuthService from "../services/AuthService";
-import HeaderComponent from "../component/HeaderComponent";
-import FooterComponent from "../component/FooterComponent";
 
 const required = value => {
   if (!value) {
@@ -161,7 +159,6 @@ export default class Register extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <HeaderComponent />
         <div className="card card-container">
           <img
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -266,7 +263,6 @@ export default class Register extends Component {
             />
           </Form>
         </div>
-        <FooterComponent />
       </div>
     );
   }

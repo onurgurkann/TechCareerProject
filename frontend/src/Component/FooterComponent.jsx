@@ -19,7 +19,7 @@ export default class FooterComponent extends Component {
                         </Navbar.Brand>
                         <Nav>
                             <Navbar.Text>
-                                <small> Copyright &copy; Onur Gürkan 2022. Tüm Hakları Saklıdır. </small>
+                                <small>Onur Gürkan 2022. Tüm Hakları Saklıdır. </small>
                             </Navbar.Text>
                         </Nav>
                         <Nav>

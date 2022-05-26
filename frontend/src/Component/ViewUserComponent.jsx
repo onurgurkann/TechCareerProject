@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Image, Icon } from 'semantic-ui-react'
 import UserService from '../services/UserService'
-import DashboardFooter from './DashboardFooter'
-import DashboardHeader from './DashboardHeader'
 import Logo from '../img/logo45.png'
 import { useParams } from 'react-router-dom'
 
@@ -25,7 +23,6 @@ class ViewUserComponent extends Component {
   render() {
     return (
       <>
-        <DashboardHeader />
         <Card centered className='text-center'>
           <Image src={Logo} wrapped ui={false} />
           <Card.Content>
@@ -40,7 +37,6 @@ class ViewUserComponent extends Component {
               {this.state.user.mail}
           </Card.Content>
         </Card>
-        <DashboardFooter />
       </>
     )
   }
