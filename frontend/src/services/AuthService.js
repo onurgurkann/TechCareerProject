@@ -6,6 +6,12 @@ class AuthService{
     //Login
     authenticateUser(user){
         return axios.post(AUTH_API_BASE_URL + "/signin", user)
+        .then(response => {
+            if(response.data.token){
+                localStorage.setItem("user", JSON.stringify(response.data));
+            }
+            return response.data;
+        });
     }
 
     //Register
@@ -14,8 +20,12 @@ class AuthService{
     }
 
     //Logout
-    logoutUser(){
-        return axios.post(AUTH_API_BASE_URL + "/signout")
+    logout(){
+        localStorage.removeItem("user");
+    }
+
+    getCurrentUser(){
+        return JSON.parse(localStorage.getItem('user'));
     }
 }
 
