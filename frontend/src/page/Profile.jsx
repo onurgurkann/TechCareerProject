@@ -46,11 +46,15 @@ export default class Profile extends Component {
                       currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
                   </ul>
                 </Label>
-                <Label>
+
+                
+                { // Token
+                
+                /* <Label>
                   <strong>Token:</strong>{" "}
                   {currentUser.token.substring(0, 20)} ...{" "}
                   {currentUser.token.substr(currentUser.token.length - 20)}
-                </Label>
+                </Label> */}
               </div>
             </div>
           </div> : null}

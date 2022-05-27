@@ -5,6 +5,7 @@ import Logo from '../img/logo110.png'
 import Instagram from '../img/instagram.png'
 import Twitter from '../img/twitter.png'
 import LinkedIn from '../img/linkedin.png'
+import Github from '../img/github.png'
 
 export default class FooterComponent extends Component {
     render() {
@@ -24,13 +25,16 @@ export default class FooterComponent extends Component {
                         </Nav>
                         <Nav>
                             <Nav.Link href='https://www.instagram.com/onurgurkann_/' target="_blank">
-                                <img width="20px" height="auto" className="img-responsive" src={Instagram} alt="instagram" />
+                                <img width="20px" height="auto" className="img-responsive" src={Instagram} alt="Instagram" />
                             </Nav.Link>
                             <Nav.Link href='https://twitter.com/onurgurkann_' target="_blank">
-                                <img width="20px" height="auto" className="img-responsive" src={Twitter} alt="instagram" />
+                                <img width="20px" height="auto" className="img-responsive" src={Twitter} alt="Twitter" />
                             </Nav.Link>
                             <Nav.Link href='https://www.linkedin.com/in/onurgurkann/' target="_blank">
-                                <img width="20px" height="auto" className="img-responsive" src={LinkedIn} alt="instagram" />
+                                <img width="20px" height="auto" className="img-responsive" src={LinkedIn} alt="LinkedIn" />
+                            </Nav.Link>
+                            <Nav.Link href='https://github.com/onurgurkann' target="_blank">
+                                <img width="20px" height="auto" className="img-responsive" src={Github} alt="Github" />
                             </Nav.Link>
                         </Nav>
                     </Container>
