@@ -2,6 +2,6 @@
 
 ## Techcareer Java Spring Boot Project
 
-npm install
-npm start
+# npm install
+# npm start
 
