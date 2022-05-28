@@ -2,8 +2,21 @@
 
 ## Techcareer Java Spring Boot Project
 
-#### npm install
-#### npm start
+#### Frontend
+- npm install
+- npm start
 
-### Database -> H2DB
-#### http://localhost:8080/h2-console
+#### Backend
+- JavaSE
+- JDBC
+- Spring Boot
+- Spring MVC
+- Spring Data
+- Spring Security
+- Spring Rest
+
+#### Database
+- http://localhost:8080/h2-console
+- H2DB
+- root
+- root
