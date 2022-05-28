@@ -2,14 +2,8 @@
 
 ## Techcareer Java Spring Boot Project
 
-#### Git
-- git clone https://github.com/onurgurkann/TechCareerProject.git
-
 ```sh
-git init
-git add .
-git commit -m "first Commit"
-git push -u origin master
+git clone https://github.com/onurgurkann/TechCareerProject.git
 ```
 
 #### Frontend
@@ -30,3 +24,11 @@ git push -u origin master
 - H2DB
 - username : root
 - password : root
+
+#### Git
+```sh
+git init
+git add .
+git commit -m "first Commit"
+git push -u origin master
+```
