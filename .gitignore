@@ -1,5 +1,5 @@
 ### Special ###
-memory_persist
+database
 log
 frontend/node_modules
 
